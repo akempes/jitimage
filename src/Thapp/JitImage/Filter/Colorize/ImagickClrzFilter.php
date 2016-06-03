@@ -32,8 +32,10 @@ class ImagickClrzFilter extends ImagickFilter
         $image = $this->driver->getResource();
         $rgba    = implode(',', $this->hexToRgb($this->getOption('c', 'fff')));
 
+        $dim = $image->getImageGeometry();
+
         $overlay = new Imagick();
-        $overlay->newImage($width, $height, new ImagickPixel(sprintf('rgb(%s)', $rgba)));
+        $overlay->newImage($dim['width'], $dim['height'], new ImagickPixel(sprintf('rgb(%s)', $rgba)));
         $image->compositeImage($overlay, Imagick::COMPOSITE_COLORIZE, 0, 0);
     }
 }
